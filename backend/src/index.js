@@ -4,7 +4,10 @@ import messageRoutes from "./routes/message.route.js";
 import dotenv from "dotenv";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
+
+
 dotenv.config();
+
 const port = process.env.PORT
 const app = express();
 app.use(express.json());
