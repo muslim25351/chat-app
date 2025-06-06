@@ -3,7 +3,7 @@ import { useAuthStore } from "../store/useAuthStore.js";
 import { User, Mail, Lock, Eye, EyeOff, Loader } from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthImagePatter from "../components/AuthImagePatter.jsx";
-
+import { toast } from "react-hot-toast";
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -15,13 +15,40 @@ export default function SignUpPage() {
 
   const { signup, isSigningUp } = useAuthStore();
 
-  const validateForm = () => {};
+  const validateForm = () => {
+    if (!formData.fullName.trim()) {
+      toast.error("Full Name is required");
+      return false;
+    }
+    if (!formData.email.trim()) {
+      toast.error("Email is required");
+      return false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      toast.error("Invalid email address");
+      return false;
+    }
+    if (!formData.password.trim()) {
+      toast.error("Password is required");
+      return false;
+    }
+    if (formData.password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return false;
+    }
+    return true;
+  };
+
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const success = validateForm();
+    if (success) {
+      signup(formData);
+    }
   };
 
   return (
@@ -142,7 +169,7 @@ export default function SignUpPage() {
           </div>
         </div>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 mx-auto">
         <AuthImagePatter
           title="Welcome to our platform"
           subtitle="Create an account to get started and start your journey to success"
