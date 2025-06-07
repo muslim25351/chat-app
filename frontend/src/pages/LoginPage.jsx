@@ -24,10 +24,10 @@ export default function LoginPage() {
       <div className=" min-h-screen flex-1 flex items-center justify-center">
         <div className="w-full max-w-sm mx-auto p-6  rounded-2xl shadow-xl">
           <h1 className="text-3xl font-semibold text-center mb-2 text-yellow-600">
-            Login to your account
+            Welcome back!
           </h1>
           <p className="text-xs text-gray-500 text-center mb-4">
-            get started with your free account
+            Sign in to your account
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email */}
@@ -95,10 +95,10 @@ export default function LoginPage() {
               {isLoggingIn ? (
                 <>
                   <Loader className="size-5 animate-spin mr-2" />
-                  Logging In...
+                  Loading...
                 </>
               ) : (
-                "Create Account"
+                "Sign In"
               )}
             </button>
           </form>
