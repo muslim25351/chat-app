@@ -2,21 +2,22 @@ import React from "react";
 import { Settings, LogOut, User } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore.js";
 import { Link } from "react-router-dom";
+import ThemeSelector from "./ThemeSelector";
 
 export default function Navbar() {
   const { authUser, logout } = useAuthStore();
   return (
-    <nav className=" shadow-md px-6 py-4 flex items-center justify-between">
-      <Link to="/">
-        <div className="text-2xl font-semibold text-yellow-600">Chat-App</div>
-      </Link>
+    <nav className="navbar bg-base-100 shadow-md px-6 py-4">
+      <div className="flex-1">
+        <Link to="/">
+          <div className="text-2xl font-semibold text-primary">Chat-App</div>
+        </Link>
+      </div>
 
-      <div className="flex items-center gap-6 text-slate-300">
+      <div className="flex items-center gap-6">
+        <ThemeSelector />
         <Link to="/setting">
-          <button
-            className="flex items-center gap-2 hover:text-yellow-600 transition"
-            onClick={() => console.log("Settings clicked")}
-          >
+          <button className="btn btn-ghost btn-sm">
             <Settings className="w-5 h-5" />
             <span className="hidden sm:inline">Settings</span>
           </button>
@@ -25,18 +26,14 @@ export default function Navbar() {
         {authUser && (
           <>
             <Link to="/profile">
-              <button
-                className="flex items-center gap-2 hover:text-yellow-600 transition"
-                onClick={() => console.log("Profile clicked")}
-              >
+              <button className="btn btn-ghost btn-sm">
                 <User className="w-5 h-5" />
                 <span className="hidden sm:inline">Profile</span>
               </button>
             </Link>
             <Link to="/login">
-              {" "}
               <button
-                className="flex items-center gap-2 hover:text-red-500 transition"
+                className="btn btn-ghost btn-sm text-error hover:bg-error hover:text-error-content"
                 onClick={logout}
               >
                 <LogOut className="w-5 h-5" />

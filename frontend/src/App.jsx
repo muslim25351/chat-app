@@ -15,6 +15,9 @@ export default function App() {
 
   useEffect(() => {
     checkAuth();
+    // Load theme from localStorage
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
   }, [checkAuth]);
   console.log({ authUser });
 
@@ -26,7 +29,7 @@ export default function App() {
     );
   }
   return (
-    <div className="">
+    <div className="min-h-screen bg-base-100">
       <Navbar />
       <Routes>
         <Route
