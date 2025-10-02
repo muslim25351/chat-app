@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore.js";
 import SidebarSkeleton from "./skeleton/SidebarSkeleton.jsx";
 import { Users } from "lucide-react";
+import { useAuthStore } from "../store/useAuthStore.js";
 
 export default function Sidebar() {
   const {
@@ -11,8 +12,8 @@ export default function Sidebar() {
     selectedUser,
     setSelectedUser,
   } = useChatStore();
+  const { onlineUsers } = useAuthStore();
 
-  const onlineUsers = [];
   useEffect(() => {
     getUsers();
   }, [getUsers]);
@@ -25,7 +26,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
+    <aside className="h-full w-20 lg:w-72 shadow-[5px_0_10px_-5px_rgba(0,0,0,0.3)] border-r-2 border-base-300 flex flex-col transition-all duration-200">
       <div className="border-b border-base-300 w-full p-5">
         <div className="flex items-center gap-2">
           <Users className="w-6 h-6" />
@@ -37,14 +38,14 @@ export default function Sidebar() {
         {users.map((user) => (
           <button
             key={user._id}
-            onClick={() => setSelectedUser(user._id)}
+            onClick={() => setSelectedUser(user)}
             className={`w-full px-4 flex items-center gap-3 hover:bg-base-300 transition-colors ${
               selectedUser?._id === user._id
                 ? "bg-base-300 ring-1 ring-base-300"
                 : ""
             }`}
           >
-            <div className="relative mx-auto lg:mx-0">
+            <div className="relative mx-auto lg:mx-0 py-2">
               <img
                 src={user.profilePic || "/images.jpg"}
                 alt={user.fullName}
