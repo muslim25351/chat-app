@@ -7,7 +7,7 @@ import ThemeSelector from "./ThemeSelector";
 export default function Navbar() {
   const { authUser, logout } = useAuthStore();
   return (
-    <nav className="navbar bg-base-100 shadow-md px-6 py-4">
+    <nav className="navbar bg-base-100 shadow-md px-6 py-2">
       <div className="flex-1">
         <Link to="/">
           <div className="text-2xl font-semibold text-primary">Chat-App</div>

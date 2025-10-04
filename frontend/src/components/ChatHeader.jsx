@@ -9,9 +9,9 @@ const ChatHeader = () => {
     return null;
   }
 
-  console.log("Selected User in ChatHeader:", selectedUser);
+  // console.log("Selected User in ChatHeader:", selectedUser);
   return (
-    <div className="p-2.5 border-b border-base-300 shadow-lg">
+    <div className="p-1.5 border-b border-base-300 shadow-sm">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           {/* Avatar */}

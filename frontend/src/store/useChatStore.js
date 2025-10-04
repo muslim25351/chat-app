@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { toast } from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
 
-export const useChatStore = create((set) => ({
+export const useChatStore = create((set, get) => ({
   messages: [],
   users: [],
   selectedUser: null,
@@ -23,15 +23,36 @@ export const useChatStore = create((set) => ({
     }
   },
   getMessages: async (userId) => {
+    if (!userId) {
+      console.warn("getMessages called with undefined userId");
+      return;
+    }
     set({ isMessagesLoading: true });
     try {
       const response = await axiosInstance.get(`/messages/${userId}`);
-      set({ messages: response.data.messages, isMessagesLoading: false });
+      set({ messages: response.data, isMessagesLoading: false });
     } catch (error) {
-      console.error("Error fetching messages:", error.response.data);
+      console.error(
+        "Error fetching messages:",
+        error.response?.data || error.message
+      );
       toast.error("Failed to load messages");
     } finally {
       set({ isMessagesLoading: false });
+    }
+  },
+  sendMessage: async (messageData) => {
+    const { selectedUser, messages } = get();
+    try {
+      const response = await axiosInstance.post(
+        `/messages/send/${selectedUser._id}`,
+        messageData
+      );
+      set({ messages: [...messages, response.data] });
+      toast.success("Message sent successfully");
+    } catch (error) {
+      console.error("Error sending message:", error.response.data);
+      toast.error("Failed to send message");
     }
   },
   //to be improved later
