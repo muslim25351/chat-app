@@ -16,12 +16,12 @@ export default function Navbar() {
 
       <div className="flex items-center gap-6">
         <ThemeSelector />
-        <Link to="/setting">
+        {/* <Link to="/setting">
           <button className="btn btn-ghost btn-sm">
             <Settings className="w-5 h-5" />
             <span className="hidden sm:inline">Settings</span>
           </button>
-        </Link>
+        </Link> */}
 
         {authUser && (
           <>

@@ -3,6 +3,7 @@ import { useChatStore } from "../store/useChatStore.js";
 import ChatHeader from "./ChatHeader.jsx";
 import MessageSkeleton from "./skeleton/MessageSkeleton.jsx";
 import { useAuthStore } from "../store/useAuthStore.js";
+import { useRef } from "react";
 export default function ChatContainer() {
   const {
     messages,
@@ -13,6 +14,7 @@ export default function ChatContainer() {
     unsubscribeFromMessages,
   } = useChatStore();
   const { authUser } = useAuthStore();
+  const messageEndRef = useRef(null);
 
   useEffect(() => {
     if (selectedUser?._id) {
@@ -28,6 +30,12 @@ export default function ChatContainer() {
     subscribeToMessages,
     unsubscribeFromMessages,
   ]);
+
+  useEffect(() => {
+    if (messageEndRef.current || messages) {
+      messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   if (isMessagesLoading) {
     return (
@@ -71,8 +79,9 @@ export default function ChatContainer() {
 
               <div
                 className={`chat ${
-                  message.senderId === authUser._id ? "chat-start" : "chat-end"
+                  message.senderId === authUser._id ? "chat-end" : "chat-start"
                 }`}
+                ref={messageEndRef}
               >
                 <div className="chat-image avatar">
                   <div className="w-10 h-10 rounded-full">
