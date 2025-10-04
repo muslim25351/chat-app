@@ -11,7 +11,9 @@ import { Loader } from "lucide-react";
 import { Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 export default function App() {
-  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
+
+  console.log({ onlineUsers });
 
   useEffect(() => {
     checkAuth();
@@ -19,7 +21,7 @@ export default function App() {
     const savedTheme = localStorage.getItem("theme") || "light";
     document.documentElement.setAttribute("data-theme", savedTheme);
   }, [checkAuth]);
-  console.log({ authUser });
+  // console.log({ authUser });
 
   if (!authUser && isCheckingAuth) {
     return (

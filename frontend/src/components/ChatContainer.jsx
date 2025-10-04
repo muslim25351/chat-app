@@ -4,14 +4,30 @@ import ChatHeader from "./ChatHeader.jsx";
 import MessageSkeleton from "./skeleton/MessageSkeleton.jsx";
 import { useAuthStore } from "../store/useAuthStore.js";
 export default function ChatContainer() {
-  const { messages, getMessages, isMessagesLoading, selectedUser } =
-    useChatStore();
+  const {
+    messages,
+    getMessages,
+    isMessagesLoading,
+    selectedUser,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  } = useChatStore();
   const { authUser } = useAuthStore();
+
   useEffect(() => {
     if (selectedUser?._id) {
       getMessages(selectedUser._id);
     }
-  }, [selectedUser?._id, getMessages]);
+    subscribeToMessages();
+    return () => {
+      unsubscribeFromMessages();
+    };
+  }, [
+    selectedUser?._id,
+    getMessages,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  ]);
 
   if (isMessagesLoading) {
     return (
