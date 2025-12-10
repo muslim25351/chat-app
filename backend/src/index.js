@@ -25,15 +25,14 @@ app.use(
 );
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
-if (process.env.NODE_ENV === "production") {
-  const distPath = path.join(_dirname, "../frontend/dist");
-  app.use(express.static(distPath));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(distPath, "index.html"));
-  });
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(_dirname, "../frontend/dist")));
 }
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(_dirname, "../frontend", "dist", "index.html"));
+});
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   connectDB();
